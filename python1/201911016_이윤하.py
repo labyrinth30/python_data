@@ -1,0 +1,13 @@
+studentNo = input('학번을 입력하세요: ')
+studentName = input('이름을 입력하세요: ')
+for i in range(0,5):
+    print(studentNo)
+    print(studentName)
+lenOfNo = len(studentNo)
+lenOfName = len(studentName)
+print('학번의 길이: ' + str(lenOfNo))
+print('이름의 길이: ' + str(lenOfName))
+a = input('영문을 입력하세요: ')
+print(a.upper())
+print(a.lower())
+print('-'.join(a))

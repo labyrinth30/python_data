@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="367a42ad-ba24-4760-9ff5-0195d7e03459" name="Changes" comment="" />
+    <list default="true" id="367a42ad-ba24-4760-9ff5-0195d7e03459" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/python1/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/python1/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/python1/main.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5
-}]]></component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2ZhEeAdT4Vct8oj1kChzYPAaumO" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -19,6 +25,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "/Users/younhalee/PJ/Python",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
@@ -40,6 +47,7 @@
       <option name="presentableId" value="Default" />
       <updated>1702866003164</updated>
       <workItem from="1702866004213" duration="21000" />
+      <workItem from="1702959098544" duration="19000" />
     </task>
     <servers />
   </component>
