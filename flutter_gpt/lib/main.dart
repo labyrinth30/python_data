@@ -13,11 +13,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  String _userInput = "";
   String _generatedText = "";
 
   Future<void> generateText() async {
-    String prompt =
-        "Please recommend only three restaurants near Seoul National University Station";
+    String prompt = "Translate $_userInput into English";
     String model = "text-davinci-002";
     String apiKey = APIKEY;
 
@@ -44,9 +44,6 @@ class _MyAppState extends State<MyApp> {
         _generatedText = data['choices'][0]['text'];
       });
     } else {
-      var data = jsonDecode(response.body);
-      print(response.statusCode);
-      print(data);
       setState(() {
         _generatedText = "Error: ${response.reasonPhrase}";
       });
@@ -60,17 +57,34 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('GPT-3 Text Generation'),
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: generateText,
-                child: const Text('Generate Text'),
-              ),
-              const SizedBox(height: 20),
-              Text(_generatedText),
-            ],
+        body: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20,
+          ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextFormField(
+                  onChanged: (value) {
+                    // 입력이 변경될 때마다 값을 저장
+                    setState(() {
+                      _userInput = value;
+                    });
+                  },
+                  decoration: const InputDecoration(
+                    labelText: '번역할 텍스트를 입력하세요', // 힌트 텍스트
+                  ),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: generateText,
+                  child: const Text('Generate Text'),
+                ),
+                const SizedBox(height: 20),
+                Text(_generatedText),
+              ],
+            ),
           ),
         ),
       ),

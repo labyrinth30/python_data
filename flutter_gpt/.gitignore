@@ -1,4 +1,5 @@
 # Miscellaneous
+lib/secret.dart
 *.class
 *.log
 *.pyc
