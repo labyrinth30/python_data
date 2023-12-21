@@ -6,7 +6,7 @@ import 'dart:convert';
 void main() => runApp(const MyApp());
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -14,10 +14,23 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _userInput = "";
+  String _selectedLanguage = "English";
   String _generatedText = "";
 
+  final List<String> _languages = [
+    "English",
+    "Spanish",
+    "French",
+    "German",
+    "Italian",
+    "Korean",
+    "Chinese",
+    "Japanese",
+  ];
+
   Future<void> generateText() async {
-    String prompt = "Translate $_userInput into English";
+    String prompt =
+        "Explain the concept of '$_userInput' as if you were talking to an 8-year-old, and translate it into $_selectedLanguage.";
     String model = "text-davinci-002";
     String apiKey = APIKEY;
 
@@ -28,17 +41,14 @@ class _MyAppState extends State<MyApp> {
         'Authorization': 'Bearer $apiKey',
       },
       body: jsonEncode({
-        'prompt': prompt, // 새 텍스트를 생성할 때 시작점으로 사용할 초기 텍스트 프롬프트.
-        'max_tokens': 1000, // 출력 텍스트에 생성할 토큰(즉, 단어)의 최대 개수입니다.
-        'temperature':
-            0.5, // 생성된 텍스트의 '창의성' 또는 무작위성을 측정하는 값, 값이 높을수록 더 다양하고 예측할 수 없는 텍스트가 생성되고, 낮을수록 더 보수적이고 예측 가능한 텍스트가 생성됨
-        // 'n': 1, // 생성할 독립적인 완성문의 수입니다. 각 완성문은 temperature 에 의해 도입된 무작위성에 따라 조금씩 달라짐.
-        // 'stop': '.' // 모델이 토큰을 발견할 때 텍스트 생성을 중지하도록 하는 하나 이상의 토큰 문자열 특정 단어나 구문으로 끝나는 텍스트를 생성할 때 유용할 수 있습니다.
+        'prompt': prompt,
+        'max_tokens': 1000,
+        'temperature': 0.5,
       }),
     );
 
     if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
+      final data = jsonDecode(utf8.decode(response.bodyBytes));
       print(data);
       setState(() {
         _generatedText = data['choices'][0]['text'];
@@ -58,31 +68,48 @@ class _MyAppState extends State<MyApp> {
           title: const Text('GPT-3 Text Generation'),
         ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
                   onChanged: (value) {
-                    // 입력이 변경될 때마다 값을 저장
                     setState(() {
                       _userInput = value;
                     });
                   },
                   decoration: const InputDecoration(
-                    labelText: '번역할 텍스트를 입력하세요', // 힌트 텍스트
+                    labelText: '설명할 개념을 입력하세요',
+                    hintText: '여기에 입력하세요...',
                   ),
+                ),
+                const SizedBox(height: 20),
+                DropdownButton<String>(
+                  value: _selectedLanguage,
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedLanguage = newValue!;
+                    });
+                  },
+                  items:
+                      _languages.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: generateText,
-                  child: const Text('Generate Text'),
+                  child: const Text('설명 생성 및 번역'),
                 ),
                 const SizedBox(height: 20),
-                Text(_generatedText),
+                Text(
+                  _generatedText,
+                  style: const TextStyle(fontSize: 16),
+                ),
               ],
             ),
           ),
